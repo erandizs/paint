@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+        <canvas id="canvas" width="500" height="300"></canvas>
+
+        <script>
+          
+     
+          var canvas = document.getElementById('canvas');
+          var contexto = canvas.getContext('2d');
+
+          // coordenadas del mouse
+          var startX, startY, endX, endY;
+
+          // agarrar las coordenadas del mouse cuqando hace clic
+          canvas.addEventListener('mousedown', function(event) {
+              startX = event.clientX - canvas.getBoundingClientRect().left; // x
+              startY = event.clientY - canvas.getBoundingClientRect().top;  // y
+          });
+
+          // cordenadas al soltar el mouse
+          canvas.addEventListener('mouseup', function(event) {
+              endX = event.clientX - canvas.getBoundingClientRect().left; // x
+              endY = event.clientY - canvas.getBoundingClientRect().top;   // y
+              
+              
+              dibujarLinea();
+          });
+
+     
+ 
+          function dibujarLinea() {
+          
+            var direccion = startX < endX ? 1 : -1;
+          var pendiente = (endY - startY) / (endX - startX); 
+          var incrementoY = direccion * ((startX !== endX) ? (pendiente) : 1); // Manejar caso de línea vertical
+          var y = startY;
+            contexto.beginPath();//dibujalimea
+            contexto.moveTo(startX, startY); // pone en las coordenadas inicio
+
+           
+           // var direccion = startX < endX ? 1 : -1; //aqui esd para ver la direccion del dibujo
+
+            // aqui no dibuja hacia atras
+            for (var x = startX + direccion; direccion * x <= direccion * endX; x += direccion) { //para que si la x es menos tmb. pk no me agarraba si iba hacia atras
+                y += incrementoY;
+              drawPixel(x, Math.round(y), [0, 0, 0]);
+                // contexto.lineTo(x, y);
+            }//ya dibuja para atras
+         
+
+            contexto.stroke(); //dibuja linea
+          
+}
+          
+          
+          function drawPixel(x, y, color) {
+                 // Obtener los datos de píxeles del canvas
+                var imageData = contexto.createImageData(1, 1);
+                var data = imageData.data;
+
+                // Establecer el color del píxel
+                data[0] = color[0];   // componente rojo
+                data[1] = color[1];   // componente verde
+                data[2] = color[2];   // componente azul
+                data[3] = 255;        // opacidad
+
+                // dibuja pixel
+                contexto.putImageData(imageData, x, y);
+            }
+
+          
+          //  drawPixel(100, 100, [255, 0, 0]); 
+            
+
+           // drawPixel(100, 100, "red");
+        </script>
+            
+    </body>
+</html>
