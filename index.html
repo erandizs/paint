@@ -61,14 +61,14 @@
           
           
           function drawPixel(x, y, color) {
-                 // Obtener los datos de píxeles del canvas
+                 //  datos de píxeles del canvas
                 var imageData = contexto.createImageData(1, 1);
                 var data = imageData.data;
 
-                // Establecer el color del píxel
-                data[0] = color[0];   // componente rojo
-                data[1] = color[1];   // componente verde
-                data[2] = color[2];   // componente azul
+                //color del píxel
+                data[0] = color[0];   // rojo
+                data[1] = color[1];   // verde
+                data[2] = color[2];   // azul
                 data[3] = 255;        // opacidad
 
                 // dibuja pixel
